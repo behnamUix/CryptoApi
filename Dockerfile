@@ -1,19 +1,17 @@
-# مرحله اول: کامپایل و ساخت فایل JAR پروژه با جاوا ۲۱
-FROM gradle:8.7-jdk21 AS build
+# مرحله اول: استفاده مستقیم از گریدل ۸.۱۲ با جاوا ۲۱
+FROM gradle:8.12-jdk21 AS build
 COPY --chown=gradle:gradle . /home/gradle/src
 WORKDIR /home/gradle/src
 
+# تنظیم رم گریدل و فورس کردن کاتلین به عدم استفاده از دمون مجزا برای جلوگیری از کرش رم
+ENV GRADLE_OPTS="-Xmx512m -Dorg.gradle.jvmargs=-Xmx512m -Dkotlin.compiler.execution.strategy=in-process"
 RUN chmod +x gradlew
-# اجرای دستور ساخت fatJar بدون نیاز به پس‌زمینه داکر
+
 RUN ./gradlew buildFatJar --no-daemon
 
-# مرحله دوم: اجرای برنامه با ایمیج معتبر و بهینه جاوا ۲۱
+# مرحله دوم: اجرا
 FROM eclipse-temurin:21-jre-noble
 EXPOSE 8080
 RUN mkdir /app
-
-# کپی کردن دقیق فایل خروجی بر اساس نام تعیین شده در گریدل
 COPY --from=build /home/gradle/src/build/libs/crypto-app.jar /app/ktor-app.jar
-
-# دستور اجرای برنامه Ktor
 ENTRYPOINT ["java", "-jar", "/app/ktor-app.jar"]
