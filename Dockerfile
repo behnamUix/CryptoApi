@@ -1,4 +1,5 @@
 # مرحله اول: کامپایل و ساخت فایل JAR پروژه
+RUN ./gradlew --stop
 FROM gradle:8.5-jdk17 AS build
 COPY --chown=gradle:gradle . /home/gradle/src
 WORKDIR /home/gradle/src
