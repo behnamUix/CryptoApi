@@ -3,6 +3,7 @@ FROM gradle:8.7-jdk21 AS build
 COPY --chown=gradle:gradle . /home/gradle/src
 WORKDIR /home/gradle/src
 
+RUN chmod +x gradlew
 # اجرای دستور ساخت fatJar بدون نیاز به پس‌زمینه داکر
 RUN ./gradlew buildFatJar --no-daemon
 
