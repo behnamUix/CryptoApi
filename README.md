@@ -22,8 +22,8 @@
 
 <div align="center">
 
-<img src="shots/list_shot.png" width="45%" alt="Crypto List">
-<img src="shots/detail_shot.png" width="45%" alt="Crypto Detail">
+<img src="shots/Group 61.png" width="45%" alt="Crypto List">
+<img src="shots/Group 59.png" width="45%" alt="Crypto Detail">
 
 </div>
 ---
