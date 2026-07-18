@@ -3,19 +3,19 @@ package com.behnamdev.features.crypto.domain.model
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class CryptoResponse(
-    val status: Boolean,
-    val resultset_size: Int,
-    val result: List<CryptoItem>
+data class CryptoPriceResponse(
+    val status: String,
+    val symbols: List<CryptoPriceItem>
 )
 
 @Serializable
-data class CryptoItem(
-    val id: String,
+data class CryptoPriceItem(
     val symbol: String,
-    val name: String,
-    val source: String,
-    val ohlc_available_from: String,
-    val history_available_from: String
+    val last: String,
+    val last_btc: String,
+    val lowest: String,
+    val highest: String,
+    val date: String,
+    val daily_change_percentage: String,
+    val source_exchange: String
 )
-

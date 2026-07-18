@@ -2,7 +2,6 @@ package com.behnamdev
 
 import com.behnamdev.features.crypto.core.configureDependencyInjection
 import com.behnamdev.features.crypto.core.configureSerialization
-import io.ktor.server.engine.*
 import io.ktor.server.application.*
 
 fun main(args: Array<String>) {
@@ -20,4 +19,6 @@ fun Application.module() {
 
     // ۳. روت‌ها را در آخرین مرحله لود میکنیم
     configureRouting()
+
+
 }
