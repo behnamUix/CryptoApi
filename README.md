@@ -20,14 +20,12 @@
 
 # 📸 Screenshots
 
-<p align="center">
-  <img src="shots/list_shot.png" width="80%" alt="Crypto List">
-</p>
+<div align="center">
 
-<p align="center">
-  <img src="shots/detail_shot.png" width="35%" alt="Crypto Detail">
-</p>
+<img src="shots/list_shot.png" width="45%" alt="Crypto List">
+<img src="shots/detail_shot.png" width="45%" alt="Crypto Detail">
 
+</div>
 ---
 
 # ✨ Features | قابلیت‌ها
