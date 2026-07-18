@@ -4,8 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7d9e3449-ff16-4d6b-b72f-eac2a58787b3" name="Changes" comment="add docker">
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+    <list default="true" id="7d9e3449-ff16-4d6b-b72f-eac2a58787b3" name="Changes" comment="edit docker">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -220,7 +220,7 @@
       <workItem from="1784358376938" duration="297000" />
       <workItem from="1784358686233" duration="9177000" />
       <workItem from="1784368539203" duration="7551000" />
-      <workItem from="1784390176557" duration="8533000" />
+      <workItem from="1784390176557" duration="9533000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <option name="closed" value="true" />
@@ -286,7 +286,15 @@
       <option name="project" value="LOCAL" />
       <updated>1784407855765</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="edit docker">
+      <option name="closed" value="true" />
+      <created>1784408496352</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1784408496352</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -298,7 +306,8 @@
     <MESSAGE value="edit routes" />
     <MESSAGE value="add shots" />
     <MESSAGE value="add docker" />
-    <option name="LAST_COMMIT_MESSAGE" value="add docker" />
+    <MESSAGE value="edit docker" />
+    <option name="LAST_COMMIT_MESSAGE" value="edit docker" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
