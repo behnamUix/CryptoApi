@@ -1,15 +1,18 @@
-# مرحله اول: کامپایل و ساخت فایل JAR پروژه
-FROM gradle:8.5-jdk17 AS build
+# مرحله اول: کامپایل و ساخت فایل JAR پروژه با جاوا ۲۱
+FROM gradle:8.7-jdk21 AS build
 COPY --chown=gradle:gradle . /home/gradle/src
 WORKDIR /home/gradle/src
 
+# اجرای دستور ساخت fatJar بدون نیاز به پس‌زمینه داکر
 RUN ./gradlew buildFatJar --no-daemon
 
-
-FROM openjdk:17-slim
+# مرحله دوم: اجرای برنامه با ایمیج معتبر و بهینه جاوا ۲۱
+FROM eclipse-temurin:21-jre-noble
 EXPOSE 8080
 RUN mkdir /app
 
-COPY --from=build /home/gradle/src/build/libs/*all.jar /app/ktor-app.jar
+# کپی کردن دقیق فایل خروجی بر اساس نام تعیین شده در گریدل
+COPY --from=build /home/gradle/src/build/libs/crypto-app.jar /app/ktor-app.jar
+
 # دستور اجرای برنامه Ktor
 ENTRYPOINT ["java", "-jar", "/app/ktor-app.jar"]

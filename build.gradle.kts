@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.kotlin.serialization)
-    // استفاده مستقیم از شناسه جدید و نسخه سازگار با گریدل 9
     id("io.ktor.plugin") version "3.0.3"
 }
 ktor {

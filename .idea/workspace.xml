@@ -5,8 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7d9e3449-ff16-4d6b-b72f-eac2a58787b3" name="Changes" comment="edit docker">
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -221,7 +220,7 @@
       <workItem from="1784358376938" duration="297000" />
       <workItem from="1784358686233" duration="9177000" />
       <workItem from="1784368539203" duration="7551000" />
-      <workItem from="1784390176557" duration="14012000" />
+      <workItem from="1784390176557" duration="14853000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <option name="closed" value="true" />
@@ -335,7 +334,39 @@
       <option name="project" value="LOCAL" />
       <updated>1784412880312</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="edit docker">
+      <option name="closed" value="true" />
+      <created>1784413972612</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1784413972612</updated>
+    </task>
+    <task id="LOCAL-00016" summary="edit docker">
+      <option name="closed" value="true" />
+      <created>1784414069227</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1784414069227</updated>
+    </task>
+    <task id="LOCAL-00017" summary="edit docker">
+      <option name="closed" value="true" />
+      <created>1784414118276</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1784414118276</updated>
+    </task>
+    <task id="LOCAL-00018" summary="edit docker">
+      <option name="closed" value="true" />
+      <created>1784414157117</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1784414157117</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
