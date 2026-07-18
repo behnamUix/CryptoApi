@@ -72,21 +72,31 @@
 <script>
     let currentChart = null;
 
-    // استخراج نماد ارز از انتهای آدرس مرورگر (مثلا از /details/BTC مقدار BTC را برمیدارد)
+    // استخراج نماد ارز از انتهای آدرس مرورگر
     const pathParts = window.location.pathname.split('/');
     const symbol = pathParts[pathParts.length - 1];
 
     async function loadDetails() {
         try {
-            let usdToToman = 70000;
+            // مقدار پیش‌فرض منطقی تر در صورت قطع شدن کامل API
+            let usdToToman = 70000; 
+            
             try {
+                // دریافت قیمت زنده دلار (تتر) از نوبیتکس
                 const nobitexResponse = await fetch('https://api.nobitex.ir/v2/orderbook/USDTIRT');
                 const nobitexData = await nobitexResponse.json();
-                if (nobitexData && nobitexData.lastTradePrice) {
-                    usdToToman = parseFloat(nobitexData.lastTradePrice) / 10;
+                
+                if (nobitexData && nobitexData.status === 'ok') {
+                    if (nobitexData.lastTradePrice) {
+                        // تبدیل ریال به تومان
+                        usdToToman = parseFloat(nobitexData.lastTradePrice) / 10;
+                    } else if (nobitexData.bids && nobitexData.bids.length > 0) {
+                        // بک‌آپ: اگر آخرین معامله نبود، از بهترین قیمت پیشنهادی خرید استفاده کند
+                        usdToToman = parseFloat(nobitexData.bids[0][0]) / 10;
+                    }
                 }
             } catch(err) {
-                console.error("Nobitex API error", err);
+                console.error("Nobitex API error, using backup calculation", err);
             }
 
             const response = await fetch('/api/' + symbol);
