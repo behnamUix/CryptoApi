@@ -1,32 +1,18 @@
 <div align="center">
 
-# 🚀 Crypto API Gateway
+# 🚀 Cryptography API Gateway
 
 <p align="center">
-  <img src="shots/banner.png" alt="Crypto API Gateway Banner" width="100%">
+  <img src="shots/banner.png" alt="Cryptography API Gateway Banner" width="100%">
 </p>
 
-### A Modern Cryptocurrency REST API Gateway Built with Ktor
-
-A lightweight and scalable backend service built with **Ktor** that works as a **Crypto API Gateway**.  
-The application provides RESTful APIs for retrieving cryptocurrency lists and detailed coin information.
-
-The project follows **Clean Architecture principles** and is containerized using **Docker** for easy deployment.
-
----
-
-### 🇮🇷 معرفی پروژه
+### A Modern Cryptocurrency REST API Gateway Built With Ktor
 
 یک سرویس بک‌اند مدرن مبتنی بر **Ktor** که به عنوان یک **Crypto API Gateway** عمل می‌کند.
 
-این پروژه امکان:
-- دریافت لیست ارزهای دیجیتال
-- مشاهده جزئیات هر ارز دیجیتال
-- ارائه داده‌ها از طریق REST API
+این پروژه امکان دریافت لیست ارزهای دیجیتال و مشاهده اطلاعات دقیق هر ارز را از طریق REST API فراهم می‌کند.
 
-را فراهم می‌کند.
-
-ساختار پروژه بر اساس **Clean Architecture** طراحی شده و با استفاده از **Docker** قابل اجرا و استقرار است.
+ساختار پروژه بر اساس **Clean Architecture** طراحی شده و با استفاده از **Docker** قابل استقرار است.
 
 </div>
 
@@ -35,11 +21,11 @@ The project follows **Clean Architecture principles** and is containerized using
 # 📸 Screenshots
 
 <p align="center">
-  <img src="shots/list_shot.png" width="80%" alt="Cryptocurrency List">
+  <img src="shots/list_shot.png" width="80%" alt="Crypto List">
 </p>
 
 <p align="center">
-  <img src="shots/detail_shot.png" width="35%" alt="Cryptocurrency Detail">
+  <img src="shots/detail_shot.png" width="35%" alt="Crypto Detail">
 </p>
 
 ---
@@ -48,14 +34,15 @@ The project follows **Clean Architecture principles** and is containerized using
 
 ## 🇺🇸 Features
 
-- Cryptocurrency list endpoint
-- Cryptocurrency detail endpoint
-- RESTful API implementation
-- Clean Architecture structure
+- Cryptocurrency list API
+- Cryptocurrency detail API
+- RESTful API
+- Clean Architecture
 - Dependency Injection with Koin
-- Asynchronous processing using Kotlin Coroutines
-- External API communication using Ktor Client
-- Docker container support
+- Kotlin Coroutines
+- Ktor HTTP Client
+- Docker Containerization
+- Railway Deployment
 
 
 ## 🇮🇷 قابلیت‌ها
@@ -66,8 +53,8 @@ The project follows **Clean Architecture principles** and is containerized using
 - معماری Clean Architecture
 - مدیریت وابستگی‌ها با Koin
 - پردازش غیرهمزمان با Kotlin Coroutines
-- ارتباط با سرویس‌های خارجی با Ktor Client
-- پشتیبانی از Docker
+- ارتباط با API خارجی با Ktor Client
+- استقرار با Docker و Railway
 
 ---
 
@@ -77,40 +64,170 @@ The project follows **Clean Architecture principles** and is containerized using
 |---|---|
 | Kotlin | Programming Language |
 | Ktor Server | Backend Framework |
-| Ktor HTTP Client | External API Communication |
+| Ktor Client | HTTP Communication |
 | Koin | Dependency Injection |
-| Kotlin Coroutines | Asynchronous Operations |
+| Kotlin Coroutines | Async Processing |
 | Docker | Containerization |
-| Clean Architecture | Software Architecture |
-| HTML5 | Dashboard UI |
-| CSS3 | Dashboard Styling |
+| Clean Architecture | Project Architecture |
+| HTML5 | Dashboard |
+| CSS3 | Styling |
 | JavaScript | Frontend Interaction |
+
+---
+
+# 🔥 Live API
+
+Base URL:
+
+```text
+https://cryptography.up.railway.app
+```
+
+---
+
+# 🔌 API Endpoints
+
+## 🪙 Get Cryptocurrency List
+
+دریافت لیست ارزهای دیجیتال
+
+
+### GET
+
+```http
+GET https://cryptography.up.railway.app/cryptoList
+```
+
+---
+
+## 🔍 Get Cryptocurrency Details
+
+دریافت اطلاعات کامل یک ارز دیجیتال
+
+
+### GET
+
+```http
+GET https://cryptography.up.railway.app/btc
+```
+
+---
+
+# 📊 API Overview
+
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/cryptoList` | دریافت لیست ارزهای دیجیتال |
+| GET | `/btc` | دریافت اطلاعات یک ارز دیجیتال |
 
 ---
 
 # 🏗 Architecture
 
-The project is structured based on **Clean Architecture**:
+این پروژه بر اساس **Clean Architecture** ساخته شده است.
+
 
 ```text
-                    Presentation Layer
+              Presentation Layer
 
-        Routes • API Endpoints • Dashboard
+        Routes • API • Dashboard
 
-                         │
+                    │
 
-                         ▼
+                    ▼
 
-                    Domain Layer
+                Domain Layer
 
-        Models • UseCases • Repository Contracts
+      Models • UseCases • Repository
 
-                         │
+                    │
 
-                         ▼
+                    ▼
 
-                     Data Layer
+                 Data Layer
 
-        Repository Implementation
-        Remote Data Source
-        Ktor HTTP Client
+    Repository • Remote API • Ktor Client
+```
+
+---
+
+# 📂 Project Structure
+
+
+```text
+src
+│
+├── data
+│   ├── remote
+│   ├── repository
+│   └── model
+│
+├── domain
+│   ├── model
+│   ├── repository
+│   └── usecase
+│
+├── presentation
+│   ├── routes
+│   └── dashboard
+│
+└── di
+```
+
+---
+
+# 🐳 Docker
+
+Build Image:
+
+```bash
+docker build -t cryptography-api-gateway .
+```
+
+Run Container:
+
+```bash
+docker run -p 8080:8080 cryptography-api-gateway
+```
+
+Server:
+
+```text
+http://localhost:8080
+```
+
+---
+
+# 🚂 Deployment
+
+The project is deployed using:
+
+```text
+Docker + Railway
+```
+
+Live Server:
+
+```text
+https://cryptography.up.railway.app
+```
+
+---
+
+# 🎯 Project Goals
+
+- Building a scalable backend service with Ktor
+- Applying Clean Architecture principles
+- Creating a reusable Crypto API Gateway
+- Learning backend development with Kotlin
+- Preparing production-ready API structure
+
+---
+
+# ❤️ Built With
+
+<div align="center">
+
+Kotlin • Ktor • Koin • Docker • Clean Architecture
+
+</div>
