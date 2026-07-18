@@ -50,11 +50,13 @@ dependencies {
     // ۵. احراز هویت سرور (در صورت نیاز در آینده)
     implementation("io.ktor:ktor-server-auth:2.4.3")
     implementation("io.ktor:ktor-server-auth-jwt:2.4.3")
+    implementation(libs.ktor.client.okHttp)
 
     // ۶. تزریق وابستگی Koin و ابزار لاگین
     implementation(libs.logback.classic)
     implementation(libs.koin.ktor)
     implementation(libs.koin.logger)
+    implementation("io.ktor:ktor-client-okhttp-jvm:3.0.3")
 
     // ۷. تست‌ها
     testImplementation(kotlin("test"))
