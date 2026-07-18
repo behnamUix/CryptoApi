@@ -6,9 +6,27 @@
   <img src="shots/banner.png" alt="Crypto API Gateway Banner" width="100%">
 </p>
 
-A modern **Ktor** backend service that acts as a lightweight Crypto API Gateway. The project provides REST APIs for retrieving a list of cryptocurrencies and viewing detailed information for each cryptocurrency. Built with **Clean Architecture** and containerized using **Docker**.
+### A Modern Cryptocurrency REST API Gateway Built with Ktor
 
-یک سرویس بک‌اند مدرن مبتنی بر **Ktor** که به عنوان یک **Crypto API Gateway** عمل می‌کند. این پروژه امکان دریافت لیست ارزهای دیجیتال و مشاهده اطلاعات هر ارز را از طریق REST API فراهم می‌کند. ساختار پروژه بر اساس **Clean Architecture** طراحی شده و با استفاده از **Docker** قابل استقرار است.
+A lightweight and scalable backend service built with **Ktor** that works as a **Crypto API Gateway**.  
+The application provides RESTful APIs for retrieving cryptocurrency lists and detailed coin information.
+
+The project follows **Clean Architecture principles** and is containerized using **Docker** for easy deployment.
+
+---
+
+### 🇮🇷 معرفی پروژه
+
+یک سرویس بک‌اند مدرن مبتنی بر **Ktor** که به عنوان یک **Crypto API Gateway** عمل می‌کند.
+
+این پروژه امکان:
+- دریافت لیست ارزهای دیجیتال
+- مشاهده جزئیات هر ارز دیجیتال
+- ارائه داده‌ها از طریق REST API
+
+را فراهم می‌کند.
+
+ساختار پروژه بر اساس **Clean Architecture** طراحی شده و با استفاده از **Docker** قابل اجرا و استقرار است.
 
 </div>
 
@@ -17,109 +35,82 @@ A modern **Ktor** backend service that acts as a lightweight Crypto API Gateway.
 # 📸 Screenshots
 
 <p align="center">
-  <img src="shots/list_shot.png" width="80%" alt="Dashboard">
+  <img src="shots/list_shot.png" width="80%" alt="Cryptocurrency List">
 </p>
 
 <p align="center">
-  <img src="shots/detail_shot.png" width="30%" alt="Coin Detail">
+  <img src="shots/detail_shot.png" width="35%" alt="Cryptocurrency Detail">
 </p>
 
 ---
 
 # ✨ Features | قابلیت‌ها
 
-### 🇺🇸 English
+## 🇺🇸 Features
 
-- Display a list of cryptocurrencies
-- View detailed information for each cryptocurrency
-- RESTful API
-- Clean Architecture
-- Docker support
+- Cryptocurrency list endpoint
+- Cryptocurrency detail endpoint
+- RESTful API implementation
+- Clean Architecture structure
+- Dependency Injection with Koin
+- Asynchronous processing using Kotlin Coroutines
+- External API communication using Ktor Client
+- Docker container support
 
-### 🇮🇷 فارسی
 
-- نمایش لیست ارزهای دیجیتال
-- نمایش اطلاعات هر ارز دیجیتال
+## 🇮🇷 قابلیت‌ها
+
+- دریافت لیست ارزهای دیجیتال
+- نمایش اطلاعات دقیق هر ارز دیجیتال
 - پیاده‌سازی REST API
 - معماری Clean Architecture
+- مدیریت وابستگی‌ها با Koin
+- پردازش غیرهمزمان با Kotlin Coroutines
+- ارتباط با سرویس‌های خارجی با Ktor Client
 - پشتیبانی از Docker
 
 ---
 
-# 🛠️ Tech Stack
+# 🛠 Tech Stack
 
-- Kotlin
-- Ktor Server
-- Ktor HTTP Client
-- Koin
-- Kotlin Coroutines
-- Docker
-- Clean Architecture
-- HTML5
-- CSS3
-- JavaScript
+| Technology | Usage |
+|---|---|
+| Kotlin | Programming Language |
+| Ktor Server | Backend Framework |
+| Ktor HTTP Client | External API Communication |
+| Koin | Dependency Injection |
+| Kotlin Coroutines | Asynchronous Operations |
+| Docker | Containerization |
+| Clean Architecture | Software Architecture |
+| HTML5 | Dashboard UI |
+| CSS3 | Dashboard Styling |
+| JavaScript | Frontend Interaction |
 
 ---
 
-# 🏗️ Project Architecture
+# 🏗 Architecture
+
+The project is structured based on **Clean Architecture**:
 
 ```text
-       ┌──────────────────────────────────────────┐
-       │              Presentation                │
-       │     Routes • HTTP • HTML Dashboard       │
-       └───────────────────┬──────────────────────┘
-                           │
-                           ▼
-       ┌──────────────────────────────────────────┐
-       │                 Domain                   │
-       │     Models • UseCases • Interfaces       │
-       └───────────────────┬──────────────────────┘
-                           │
-                           ▼
-       ┌──────────────────────────────────────────┐
-       │                  Data                    │
-       │ Repositories • Remote API • Ktor Client  │
-       └──────────────────────────────────────────┘
-```
+                    Presentation Layer
 
----
+        Routes • API Endpoints • Dashboard
 
-# 📂 Project Structure
+                         │
 
-```text
-src
-├── data
-│   ├── remote
-│   ├── repository
-│   └── model
-│
-├── domain
-│   ├── model
-│   ├── repository
-│   └── usecase
-│
-├── presentation
-│   ├── routes
-│   └── dashboard
-│
-└── di
-```
+                         ▼
 
----
+                    Domain Layer
 
-# 🐳 Docker
+        Models • UseCases • Repository Contracts
 
-```bash
-docker build -t crypto-api-gateway .
-docker run -p 8080:8080 crypto-api-gateway
-```
+                         │
 
----
+                         ▼
 
-# ❤️ Built With
+                     Data Layer
 
-- Kotlin
-- Ktor
-- Koin
-- Docker
-- Clean Architecture
+        Repository Implementation
+        Remote Data Source
+        Ktor HTTP Client
