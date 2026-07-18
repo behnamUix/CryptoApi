@@ -1,4 +1,4 @@
-# 🩺 DoctorApp (Crypto API Gateway)
+# Crypto API Gateway
 
 A modern, highly scalable **Ktor Backend Service** acting as a high-performance API Gateway. This project is built using professional Android/Kotlin backend standards, adhering strictly to **Clean Architecture** principles and utilizing cutting-edge reactive components.
 
