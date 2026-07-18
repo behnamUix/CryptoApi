@@ -1,20 +1,15 @@
-FROM gradle:8.7-jdk17 AS build
+# مرحله اول: کامپایل و ساخت فایل JAR پروژه
+FROM gradle:8.5-jdk17 AS build
+COPY --chown=gradle:gradle . /home/gradle/src
+WORKDIR /home/gradle/src
 
-WORKDIR /app
-
-COPY . .
-
-RUN gradle buildFatJar
-
-
-FROM eclipse-temurin:17-jre
-
-WORKDIR /app
-
-COPY --from=build /app/build/libs/*-all.jar app.jar
+RUN ./gradlew buildFatJar --no-daemon
 
 
+FROM openjdk:17-slim
 EXPOSE 8080
+RUN mkdir /app
 
-
-ENTRYPOINT ["java","-jar","app.jar"]
+COPY --from=build /home/gradle/src/build/libs/*all.jar /app/ktor-app.jar
+# دستور اجرای برنامه Ktor
+ENTRYPOINT ["java", "-jar", "/app/ktor-app.jar"]
