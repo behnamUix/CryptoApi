@@ -9,6 +9,9 @@ import org.koin.ktor.ext.inject
 fun Route.cryptoRouting() {
     val getCryptoUseCase by inject<GetCryptoUseCase>()
 
+    get("/favicon.ico") {
+        call.respond(HttpStatusCode.NoContent)
+    }
 
     get("/{symbol}") {
         val symbol = call.parameters["symbol"]
