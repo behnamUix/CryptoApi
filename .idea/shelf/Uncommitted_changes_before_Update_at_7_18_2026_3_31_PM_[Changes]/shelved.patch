@@ -1,0 +1,166 @@
+Index: .idea/gradle.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"GradleMigrationSettings\" migrationVersion=\"1\" />\r\n  <component name=\"GradleSettings\">\r\n    <option name=\"linkedExternalProjectsSettings\">\r\n      <GradleProjectSettings>\r\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\r\n        <option name=\"gradleJvm\" value=\"#JAVA_HOME\" />\r\n        <option name=\"modules\">\r\n          <set>\r\n            <option value=\"$PROJECT_DIR$\" />\r\n          </set>\r\n        </option>\r\n      </GradleProjectSettings>\r\n    </option>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/gradle.xml b/.idea/gradle.xml
+--- a/.idea/gradle.xml	(revision c65c8a7ce47b6d4bdd38484ddc78869c6d1718cf)
++++ b/.idea/gradle.xml	(date 1784375221186)
+@@ -13,5 +13,6 @@
+         </option>
+       </GradleProjectSettings>
+     </option>
++    <option name="offlineMode" value="true" />
+   </component>
+ </project>
+\ No newline at end of file
+Index: build.gradle.kts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>plugins {\r\n    alias(libs.plugins.kotlin.jvm)\r\n    alias(libs.plugins.kotlin.serialization)\r\n    // استفاده مستقیم از شناسه جدید و نسخه سازگار با گریدل 9\r\n    id(\"io.ktor.plugin\") version \"3.0.3\"\r\n}\r\nktor {\r\n    fatJar {\r\n        archiveFileName.set(\"crypto-app.jar\")\r\n    }\r\n}\r\ngroup = \"com.behnamdev\"\r\nversion = \"1.0.0-SNAPSHOT\"\r\n\r\napplication {\r\n    mainClass = \"io.ktor.server.cio.EngineMain\"\r\n}\r\n\r\nkotlin {\r\n    jvmToolchain(21)\r\n    // فورس کردن کامپایلر به استفاده از لایه پایدار قدیمی برای حل باگ کرش خط ۸ Routing\r\n    compilerOptions {\r\n        freeCompilerArgs.add(\"-Xuse-k2=false\")\r\n    }\r\n}\r\n\r\ndependencies {\r\n    // ۱. هسته و افزونه\u200Cهای سرور Ktor (نسخه سازگار 2.4.3)\r\n    implementation(\"io.ktor:ktor-server-core:2.4.3\")\r\n    implementation(\"io.ktor:ktor-server-cio:2.4.3\")\r\n    implementation(\"io.ktor:ktor-server-config-yaml:2.4.3\")\r\n\r\n    // ۲. مدیریت محتوا و JSON در سمت سرور\r\n    implementation(\"io.ktor:ktor-server-content-negotiation:2.4.3\")\r\n    implementation(\"io.ktor:ktor-serialization-kotlinx-json:2.4.3\")\r\n    implementation(libs.kotlinx.serialization.json)\r\n\r\n    // ۳. کلاینت Ktor (برای درخواست زدن به API خارجی freecryptoapi)\r\n    implementation(\"io.ktor:ktor-client-core:2.4.3\")\r\n    implementation(\"io.ktor:ktor-client-cio:2.4.3\")\r\n    implementation(\"io.ktor:ktor-client-content-negotiation:2.4.3\")\r\n\r\n    // ۴. دیتابیس JetBrains Exposed و درایورها\r\n    implementation(\"org.jetbrains.exposed:exposed-core:0.57.0\")\r\n    implementation(\"org.jetbrains.exposed:exposed-dao:0.57.0\")\r\n    implementation(\"org.jetbrains.exposed:exposed-jdbc:0.57.0\")\r\n    implementation(\"org.postgresql:postgresql:42.7.4\")\r\n    implementation(\"com.zaxxer:HikariCP:6.2.1\")\r\n\r\n    // ۵. احراز هویت سرور (در صورت نیاز در آینده)\r\n    implementation(\"io.ktor:ktor-server-auth:2.4.3\")\r\n    implementation(\"io.ktor:ktor-server-auth-jwt:2.4.3\")\r\n\r\n    // ۶. تزریق وابستگی Koin و ابزار لاگین\r\n    implementation(libs.logback.classic)\r\n    implementation(libs.koin.ktor)\r\n    implementation(libs.koin.logger)\r\n\r\n    // ۷. تست\u200Cها\r\n    testImplementation(kotlin(\"test\"))\r\n    testImplementation(\"io.ktor:ktor-server-test-host:2.4.3\")\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/build.gradle.kts b/build.gradle.kts
+--- a/build.gradle.kts	(revision c65c8a7ce47b6d4bdd38484ddc78869c6d1718cf)
++++ b/build.gradle.kts	(date 1784375166761)
+@@ -50,11 +50,13 @@
+     // ۵. احراز هویت سرور (در صورت نیاز در آینده)
+     implementation("io.ktor:ktor-server-auth:2.4.3")
+     implementation("io.ktor:ktor-server-auth-jwt:2.4.3")
++    implementation(libs.ktor.client.okHttp)
+ 
+     // ۶. تزریق وابستگی Koin و ابزار لاگین
+     implementation(libs.logback.classic)
+     implementation(libs.koin.ktor)
+     implementation(libs.koin.logger)
++    implementation("io.ktor:ktor-client-okhttp-jvm:3.0.3")
+ 
+     // ۷. تست‌ها
+     testImplementation(kotlin("test"))
+Index: gradle/libs.versions.toml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>[versions]\r\nkotlin = \"2.0.20\"\r\nlogback = \"1.5.35\"\r\nkotlinx-serialization = \"1.7.3\"\r\nktor = \"2.4.3\"\r\nkoin = \"4.1.0\"\r\n\r\n[libraries]\r\nlogback-classic = { module = \"ch.qos.logback:logback-classic\", version.ref = \"logback\" }\r\nkotlinx-serialization-json = { module = \"org.jetbrains.kotlinx:kotlinx-serialization-json\", version.ref = \"kotlinx-serialization\" }\r\n\r\n# سرور کیتور\r\nktor-server-core = { module = \"io.ktor:ktor-server-core\", version.ref = \"ktor\" }\r\nktor-server-cio = { module = \"io.ktor:ktor-server-cio\", version.ref = \"ktor\" }\r\nktor-server-config-yaml = { module = \"io.ktor:ktor-server-config-yaml\", version.ref = \"ktor\" }\r\nktor-server-test-host = { module = \"io.ktor:ktor-server-test-host\", version.ref = \"ktor\" }\r\n\r\n# اضافه کردن این دو خط برای مدیریت JSON در سرور کیتور\r\nktor-server-content-negotiation = { module = \"io.ktor:ktor-server-content-negotiation\", version.ref = \"ktor\" }\r\nktor-server-serialization = { module = \"io.ktor:ktor-serialization-kotlinx-json\", version.ref = \"ktor\" }\r\n\r\n# کلاینت کیتور (برای درخواست زدن به API خارجی) - این سه خط را اضافه کنید\r\nktor-client-core = { module = \"io.ktor:ktor-client-core\", version.ref = \"ktor\" }\r\nktor-client-cio = { module = \"io.ktor:ktor-client-cio\", version.ref = \"ktor\" }\r\nktor-client-content-negotiation = { module = \"io.ktor:ktor-client-content-negotiation\", version.ref = \"ktor\" }\r\n\r\n# کوین\r\nkoin-ktor = { module = \"io.insert-koin:koin-ktor\", version.ref = \"koin\" }\r\nkoin-logger = { module = \"io.insert-koin:koin-logger-slf4j\", version.ref = \"koin\" }\r\n\r\n[plugins]\r\nkotlin-jvm = { id = \"org.jetbrains.kotlin.jvm\", version.ref = \"kotlin\" }\r\nkotlin-multiplatform = { id = \"org.jetbrains.kotlin.multiplatform\", version.ref = \"kotlin\" }\r\nkotlin-serialization = { id = \"org.jetbrains.kotlin.plugin.serialization\", version.ref = \"kotlin\" }\r\nktor = { id = \"io.ktor.plugin\", version.ref = \"ktor\" }
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/gradle/libs.versions.toml b/gradle/libs.versions.toml
+--- a/gradle/libs.versions.toml	(revision c65c8a7ce47b6d4bdd38484ddc78869c6d1718cf)
++++ b/gradle/libs.versions.toml	(date 1784375089280)
+@@ -22,6 +22,7 @@
+ # کلاینت کیتور (برای درخواست زدن به API خارجی) - این سه خط را اضافه کنید
+ ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
++ktor-client-okHttp={module="io.ktor:ktor-client-okhttp",version.ref="ktor"}
+ ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+ 
+ # کوین
+Index: build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/counters.tab
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>26\r\n0
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/counters.tab b/build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/counters.tab
+--- a/build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/counters.tab	(revision c65c8a7ce47b6d4bdd38484ddc78869c6d1718cf)
++++ b/build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/counters.tab	(date 1784375213724)
+@@ -1,2 +1,2 @@
+-26
++19
+ 0
+\ No newline at end of file
+Index: src/main/kotlin/features/cryptolist/data/repository/CryptoRepositoryImpl.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/kotlin/features/cryptolist/data/repository/CryptoRepositoryImpl.kt b/src/main/kotlin/features/cryptolist/data/repository/CryptoRepositoryImpl.kt
+new file mode 100644
+--- /dev/null	(date 1784372030756)
++++ b/src/main/kotlin/features/cryptolist/data/repository/CryptoRepositoryImpl.kt	(date 1784372030756)
+@@ -0,0 +1,29 @@
++package com.behnamdev.features.cryptolist.data.repository
++
++import com.behnamdev.features.cryptolist.data.remote.CryptoListRemoteDataSource
++import com.behnamdev.features.cryptolist.domain.model.CryptoItem
++import com.behnamdev.features.cryptolist.domain.repository.CryptoListRepository
++
++class CryptoListRepositoryImpl(private val cryptoListRemoteDataSource: CryptoListRemoteDataSource) : CryptoListRepository {
++    override suspend fun fetchRemoteCrypto(): List<CryptoItem> {
++        return try {
++            val responseDto = cryptoListRemoteDataSource.fetchLiveCryptoList()
++
++            // تبدیل لایه دیتا (Dto) به لایه دومین (Model خالص)
++            responseDto.result.map { dto ->
++                CryptoItem(
++                    id = dto.id,
++                    name = dto.name,
++                    symbol = dto.symbol,
++                    source = dto.source,
++                    ohlc_available_from = dto.ohlc_available_from,
++                    history_available_from = dto.history_available_from
++
++                )
++            }
++        } catch (e: Exception) {
++            e.printStackTrace()
++            emptyList()
++        }
++    }
++}
+\ No newline at end of file
+Index: src/main/kotlin/features/cryptolist/data/remote/CryptoListRemoteDataSource.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/kotlin/features/cryptolist/data/remote/CryptoListRemoteDataSource.kt b/src/main/kotlin/features/cryptolist/data/remote/CryptoListRemoteDataSource.kt
+new file mode 100644
+--- /dev/null	(date 1784372030977)
++++ b/src/main/kotlin/features/cryptolist/data/remote/CryptoListRemoteDataSource.kt	(date 1784372030977)
+@@ -0,0 +1,21 @@
++package com.behnamdev.features.cryptolist.data.remote
++
++import com.behnamdev.features.cryptolist.data.remote.dto.CryptoResponseDto
++import io.ktor.client.*
++import io.ktor.client.call.*
++import io.ktor.client.request.*
++import io.ktor.http.*
++
++class CryptoListRemoteDataSource(private val client: HttpClient) {
++
++    val apiUrl = "https://api.freecryptoapi.com/v1/getCryptoList"
++    val apiToken = "x8fv4264uf8emri7a016"
++
++    suspend fun fetchLiveCryptoList(): CryptoResponseDto {
++        // ارسال درخواست مستقیم به API خارجی همراه با هدر Authorization
++        return client.get(apiUrl) {
++            header(HttpHeaders.Authorization, "Bearer $apiToken")
++            contentType(ContentType.Application.Json)
++        }.body() // تبدیل خودکار پاسخ JSON به Dto ما
++    }
++}
+\ No newline at end of file
+Index: src/main/kotlin/features/cryptolist/domain/repository/CryptoListRepository.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/kotlin/features/cryptolist/domain/repository/CryptoListRepository.kt b/src/main/kotlin/features/cryptolist/domain/repository/CryptoListRepository.kt
+new file mode 100644
+--- /dev/null	(date 1784372030786)
++++ b/src/main/kotlin/features/cryptolist/domain/repository/CryptoListRepository.kt	(date 1784372030786)
+@@ -0,0 +1,9 @@
++package com.behnamdev.features.cryptolist.domain.repository
++
++import com.behnamdev.features.cryptolist.domain.model.CryptoItem
++
++interface CryptoListRepository {
++    suspend fun fetchRemoteCrypto(): List<CryptoItem>
++
++}
++

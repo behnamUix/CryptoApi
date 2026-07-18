@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Live Dashboard</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: #080c14; color: #c9d1d9;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            padding: 2rem; min-height: 100vh; display: flex; flex-direction: column; align-items: center;
+        }
+        .header {
+            text-align: center; margin-bottom: 2.5rem; background: rgba(13, 17, 23, 0.7);
+            padding: 1.5rem 3rem; border: 1px solid #21262d; border-radius: 16px;
+            backdrop-filter: blur(8px); box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+        }
+        h1 { font-size: 2.5rem; color: #00ff66; margin-bottom: 0.5rem; letter-spacing: 1px; }
+        .status-container { display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .pulse-dot { width: 8px; height: 8px; background-color: #00ff66; border-radius: 50%; animation: pulse 1.6s infinite; }
+        .crypto-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; width: 100%; max-width: 1200px; padding: 10px; }
+
+        .crypto-card {
+            background: linear-gradient(145deg, #0e1420, #131b2e);
+            border: 1px solid #223049; border-radius: 14px; padding: 1.5rem;
+            display: flex; flex-direction: column; justify-content: space-between;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative;
+            overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.3); cursor: pointer;
+        }
+        .crypto-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: linear-gradient(90deg, #00ff66, #00bfff); opacity: 0.7; }
+        .crypto-card:hover { transform: translateY(-5px); border-color: #00ff66; box-shadow: 0 8px 25px rgba(0, 255, 102, 0.15); }
+
+        .dev-card::before { background: linear-gradient(90deg, #00bfff, #8a2be2) !important; }
+        .dev-card:hover { border-color: #00bfff !important; box-shadow: 0 8px 25px rgba(0, 191, 255, 0.2) !important; }
+
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+        .symbol-badge { background: rgba(0, 255, 102, 0.1); color: #00ff66; padding: 4px 10px; border-radius: 8px; font-weight: bold; font-size: 0.9rem; border: 1px solid rgba(0, 255, 102, 0.2); }
+        .crypto-name { font-size: 1.25rem; font-weight: 600; color: #ffffff; }
+        .source-tag { font-size: 0.8rem; color: #8b949e; text-transform: uppercase; background: #1f293d; padding: 2px 6px; border-radius: 4px; }
+        .card-details { border-top: 1px solid #223049; padding-top: 0.8rem; margin-top: 0.8rem; display: flex; flex-direction: column; gap: 6px; font-size: 0.85rem; color: #8b949e; }
+        .detail-row { display: flex; justify-content: space-between; }
+        .detail-val { color: #e6edf3; font-family: monospace; }
+        .loader { color: #8b949e; font-size: 1.2rem; margin-top: 5rem; }
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 255, 102, 0.5); }
+            70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(0, 255, 102, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 255, 102, 0); }
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <h1>Crypto Dashboard</h1>
+    <div class="status-container">
+        <div class="pulse-dot"></div>
+        <span style="color: #00ff66; font-weight: 500; font-size: 0.95rem;">Live Gateway Active</span>
+    </div>
+</div>
+
+<div id="loader" class="loader">Fetching market assets...</div>
+<div class="crypto-grid" id="crypto-grid"></div>
+
+<script>
+    async function fetchCryptoList() {
+        try {
+            const response = await fetch('/cryptoList');
+            if (!response.ok) throw new Error('Failed to fetch list');
+            const data = await response.json();
+
+            document.getElementById('loader').style.display = 'none';
+            const grid = document.getElementById('crypto-grid');
+            grid.innerHTML = '';
+
+            // ۱. کارت توسعه‌دهنده در بالاترین نقطه
+            const devCard = document.createElement('div');
+            devCard.className = 'crypto-card dev-card';
+            devCard.style.cursor = 'default';
+            devCard.style.background = 'linear-gradient(145deg, #0b132b, #1c2541)';
+            devCard.innerHTML = `
+                    <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; min-height: 140px; text-align: center;">
+                        <span style="font-size: 0.85rem; color: #8b949e; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">Core Architecture</span>
+                        <span style="font-size: 1.25rem; font-weight: bold; color: #00bfff;">Developed by</span>
+                        <span style="font-size: 1.45rem; font-weight: 800; color: #ffffff; margin-top: 2px; letter-spacing: 0.5px;">behnamDev</span>
+                        <div style="margin-top: 14px; font-size: 0.75rem; color: #00ff66; background: rgba(0, 255, 102, 0.05); padding: 4px 12px; border-radius: 20px; border: 1px solid rgba(0, 255, 102, 0.15);">
+                            v1.0.0 Stable
+                        </div>
+                    </div>
+                `;
+            grid.appendChild(devCard);
+
+            // ۲. کارت‌های ارز دیجیتال با بک‌تیک استاندارد جاوااسکریپت
+            data.forEach(coin => {
+                const card = document.createElement('div');
+                card.className = 'crypto-card';
+
+                card.onclick = () => {
+                    window.location.href = '/details/' + coin.symbol;
+                };
+
+                card.innerHTML = `
+                        <div class="card-header">
+                            <span class="crypto-name">${coin.name || coin.symbol}</span>
+                            <span class="symbol-badge">${coin.symbol}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span>Source Platform</span>
+                            <span class="source-tag">${coin.source}</span>
+                        </div>
+                        <div class="card-details">
+                            <div class="detail-row">
+                                <span>OHLC Available:</span>
+                                <span class="detail-val">${coin.ohlc_available_from}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span>History From:</span>
+                                <span class="detail-val">${coin.history_available_from}</span>
+                            </div>
+                        </div>
+                    `;
+                grid.appendChild(card);
+            });
+
+        } catch (error) {
+            document.getElementById('loader').innerText = 'Failed to load crypto assets.';
+            console.error(error);
+        }
+    }
+
+    fetchCryptoList();
+    setInterval(fetchCryptoList, 180000);
+</script>
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Details</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: #080c14; color: #c9d1d9;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            padding: 2rem; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+        .detail-container {
+            background: linear-gradient(145deg, #0e1420, #131b2e);
+            border: 1px solid #223049; border-radius: 20px; padding: 2.5rem;
+            width: 100%; max-width: 550px; box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            direction: ltr;
+        }
+        .back-btn {
+            display: inline-block; margin-bottom: 1.5rem; color: #58a6ff; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;
+        }
+        .back-btn:hover { color: #8b949e; }
+        .title-row { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #223049; padding-bottom: 1rem; margin-bottom: 1.5rem; }
+        .symbol { font-size: 2rem; color: #ffffff; font-weight: bold; }
+
+        .price-section { text-align: center; margin-bottom: 2rem; }
+        .price-toman { font-size: 2.8rem; color: #00ff66; font-weight: bold; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; direction: rtl; }
+        .price-usd { font-size: 1.3rem; color: #8b949e; font-family: monospace; margin-top: 0.2rem; }
+
+        .chart-container { width: 100%; height: 180px; margin-bottom: 2rem; position: relative; }
+
+        .info-table { width: 100%; display: flex; flex-direction: column; gap: 12px; }
+        .info-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dashed #223049; }
+        .label { color: #8b949e; font-size: 0.95rem; }
+        .value { color: #ffffff; font-family: monospace; font-size: 1rem; font-weight: 500; }
+        .up { color: #00ff66 !important; } .down { color: #ff3366 !important; }
+        .loader { color: #8b949e; font-size: 1.2rem; text-align: center; }
+    </style>
+</head>
+<body>
+<div class="detail-container">
+    <a href="/" class="back-btn">← Back to Dashboard</a>
+    <div id="loading" class="loader">Loading token details...</div>
+
+    <div id="content" style="display:none;">
+        <div class="title-row">
+            <span class="symbol" id="det-symbol">-</span>
+            <span style="color:#8b949e; text-transform:uppercase;" id="det-exchange">-</span>
+        </div>
+
+        <div class="price-section">
+            <div class="price-toman" id="det-price-toman">۰ تومان</div>
+            <div class="price-usd" id="det-price-usd">$0.00</div>
+        </div>
+
+        <div class="chart-container">
+            <canvas id="cryptoChart"></canvas>
+        </div>
+
+        <div class="info-table">
+            <div class="info-row"><span class="label">24h Change</span><span class="value" id="det-change">-</span></div>
+            <div class="info-row"><span class="label">Highest Price</span><span class="value" id="det-high">-</span></div>
+            <div class="info-row"><span class="label">Lowest Price</span><span class="value" id="det-low">-</span></div>
+            <div class="info-row"><span class="label">Price in BTC</span><span class="value" id="det-btc">-</span></div>
+            <div class="info-row"><span class="label">Last Updated</span><span class="value" id="det-date" style="font-size:0.85rem;">-</span></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let currentChart = null;
+
+    // استخراج نماد ارز از انتهای آدرس مرورگر (مثلا از /details/BTC مقدار BTC را برمیدارد)
+    const pathParts = window.location.pathname.split('/');
+    const symbol = pathParts[pathParts.length - 1];
+
+    async function loadDetails() {
+        try {
+            let usdToToman = 70000;
+            try {
+                const nobitexResponse = await fetch('https://api.nobitex.ir/v2/orderbook/USDTIRT');
+                const nobitexData = await nobitexResponse.json();
+                if (nobitexData && nobitexData.lastTradePrice) {
+                    usdToToman = parseFloat(nobitexData.lastTradePrice) / 10;
+                }
+            } catch(err) {
+                console.error("Nobitex API error", err);
+            }
+
+            const response = await fetch('/api/' + symbol);
+            if (!response.ok) throw new Error('Backend API error');
+            const data = await response.json();
+
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('content').style.display = 'block';
+
+            document.getElementById('det-symbol').innerText = data.symbol || '-';
+            document.getElementById('det-exchange').innerText = data.source_exchange || '-';
+
+            const currentPriceUsd = data.last ? Number(data.last) : 0;
+            const currentPriceToman = currentPriceUsd * usdToToman;
+
+            document.getElementById('det-price-toman').innerText = Math.round(currentPriceToman).toLocaleString('fa-IR') + ' تومان';
+            document.getElementById('det-price-usd').innerText = '$' + currentPriceUsd.toLocaleString(undefined, { maximumFractionDigits: 4 });
+
+            if(data.highest) document.getElementById('det-high').innerText = '$' + Number(data.highest).toLocaleString(undefined, { maximumFractionDigits: 4 });
+            if(data.lowest) document.getElementById('det-low').innerText = '$' + Number(data.lowest).toLocaleString(undefined, { maximumFractionDigits: 4 });
+
+            document.getElementById('det-btc').innerText = data.last_btc || '-';
+            document.getElementById('det-date').innerText = data.date || '-';
+
+            let isUp = true;
+            if (data.daily_change_percentage) {
+                const changePercent = parseFloat(data.daily_change_percentage);
+                isUp = changePercent >= 0;
+                const changeEl = document.getElementById('det-change');
+                changeEl.innerText = changePercent.toFixed(2) + '%';
+
+                if (isUp) {
+                    changeEl.className = 'value up';
+                    changeEl.innerText = '+' + changeEl.innerText;
+                    document.getElementById('det-price-toman').style.color = '#00ff66';
+                } else {
+                    changeEl.className = 'value down';
+                    changeEl.innerText = changeEl.innerText;
+                    document.getElementById('det-price-toman').style.color = '#ff3366';
+                }
+            }
+
+            drawChart(currentPriceUsd, isUp);
+
+        } catch(e) {
+            document.getElementById('loading').innerText = 'Failed to load details.';
+            console.error(e);
+        }
+    }
+
+    function drawChart(currentPrice, isUp) {
+        const ctx = document.getElementById('cryptoChart').getContext('2d');
+        if (currentChart) currentChart.destroy();
+
+        const labels = ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'Now'];
+        const mockData = labels.map((_, i) => {
+            if (i === labels.length - 1) return currentPrice;
+            return currentPrice * (1 + (Math.random() * 0.016 - 0.008));
+        });
+
+        const lineColor = isUp ? '#00ff66' : '#ff3366';
+        const gradient = ctx.createLinearGradient(0, 0, 0, 180);
+        gradient.addColorStop(0, isUp ? 'rgba(0, 255, 102, 0.35)' : 'rgba(255, 51, 102, 0.35)');
+        gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+        currentChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: mockData,
+                    borderColor: lineColor,
+                    backgroundColor: gradient,
+                    borderWidth: 3,
+                    pointRadius: 0,
+                    pointHitRadius: 10,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                        callbacks: {
+                            label: function(context) {
+                                return '$' + context.parsed.y.toLocaleString(undefined, { maximumFractionDigits: 2 });
+                            }
+                        }
+                    }
+                },
+                scales: { x: { display: false }, y: { display: false } }
+            }
+        });
+    }
+
+    loadDetails();
+    setInterval(loadDetails, 60000);
+</script>
+</body>
+</html>
