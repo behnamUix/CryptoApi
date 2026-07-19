@@ -22,8 +22,8 @@
 
 <div align="center">
 
-<img style="border-radius: 12px;" src="shots/list_shot.png" width="45%" alt="Crypto List" >
-<img style="border-radius: 12px;" src="shots/detail_shot.png" width="45%" alt="Crypto Detail">
+<img style="border-radius: 16px;" src="shots/list_shot.png" width="45%" alt="Crypto List" >
+<img style="border-radius: 16px;" src="shots/detail_shot.png" width="45%" alt="Crypto Detail">
 
 </div>
 ---
