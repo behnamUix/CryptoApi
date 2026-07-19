@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7d9e3449-ff16-4d6b-b72f-eac2a58787b3" name="Changes" comment="edit README.md" />
+    <list default="true" id="7d9e3449-ff16-4d6b-b72f-eac2a58787b3" name="Changes" comment="edit index.html" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -231,7 +231,7 @@
       <workItem from="1784358686233" duration="9177000" />
       <workItem from="1784368539203" duration="7551000" />
       <workItem from="1784390176557" duration="16129000" />
-      <workItem from="1784446519924" duration="1332000" />
+      <workItem from="1784446519924" duration="1669000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <option name="closed" value="true" />
@@ -409,7 +409,23 @@
       <option name="project" value="LOCAL" />
       <updated>1784447734502</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="edit README.md">
+      <option name="closed" value="true" />
+      <created>1784447877472</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1784447877472</updated>
+    </task>
+    <task id="LOCAL-00024" summary="edit index.html">
+      <option name="closed" value="true" />
+      <created>1784448193960</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1784448193960</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -423,7 +439,8 @@
     <MESSAGE value="add docker" />
     <MESSAGE value="edit docker" />
     <MESSAGE value="edit README.md" />
-    <option name="LAST_COMMIT_MESSAGE" value="edit README.md" />
+    <MESSAGE value="edit index.html" />
+    <option name="LAST_COMMIT_MESSAGE" value="edit index.html" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
