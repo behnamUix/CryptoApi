@@ -22,8 +22,8 @@
 
 <div align="center">
 
-<img src="shots/Group 61.png" width="45%" alt="Crypto List">
-<img src="shots/Group 59.png" width="45%" alt="Crypto Detail">
+<img style="border-radius: 12px;" src="shots/list_shot.png" width="45%" alt="Crypto List" >
+<img style="border-radius: 12px;" src="shots/detail_shot.png" width="45%" alt="Crypto Detail">
 
 </div>
 ---
@@ -228,4 +228,5 @@ https://cryptography.up.railway.app
 
 Kotlin • Ktor • Koin • Docker • Clean Architecture
 
+</div>
 </div>
