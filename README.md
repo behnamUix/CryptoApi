@@ -77,9 +77,9 @@
 
 Base URL:
 
-```text
+
 <a href="https://cryptography.up.railway.app"/>
-```
+
 
 ---
 
