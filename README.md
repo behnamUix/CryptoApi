@@ -3,7 +3,7 @@
 # 🚀 Cryptography API Gateway
 
 <p align="center">
-  <img src="shots/banner.png" alt="Cryptography API Gateway Banner" width="100%" height="500px">
+  <img src="shots/banner.png" alt="Cryptography API Gateway Banner" width="100%" height="200px">
 </p>
 
 ### A Modern Cryptocurrency REST API Gateway Built With Ktor
